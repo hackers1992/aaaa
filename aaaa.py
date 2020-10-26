@@ -84,6 +84,51 @@ print " \x1b[1;93m============================================================="
 
 
 
+back = 0
+berhasil = []
+cekpoint = []
+oks = []
+id = []
+listgrup = []
+vulnot = "\033[31mNot Vuln"
+vuln = "\033[32mVuln"
+def methodlogin():
+    os.system('clear')
+    try:
+        toket = open('login.txt','r')
+        menu()
+    except (KeyError,IOError):
+        os.system('clear')
+        print logo
+        print "[1] Login With ID/Password"
+        print "[2] Login With Token"
+        print "[3] Back"
+        print
+        method_menu()
+def method_menu():
+	hos = raw_input("\nChoose Option >>  ")
+	if hos =="":
+		print"[!]  Wrong Input"
+		keluar()
+	elif hos =="1":
+		login()
+	elif hos =="2":
+		os.system('clear')
+		print logo
+		hosp = raw_input("[+] Give Token : ")
+		tik()
+		hopa = open('login.txt','w')
+		hopa.write(hosp)
+		hopa.close()
+		print "\n[✓] Logged In Successfully."
+		time.sleep(1)
+		menu()
+		
+	elif hos =="0":
+		keluar()
+	else:
+		print"[!] Wrong Input"
+		keluar()
 def login():
 	os.system("clear")
 	try:
