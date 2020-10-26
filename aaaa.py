@@ -696,7 +696,7 @@ def clone_dari_member_group():
 		print"\033[1;96m[!] \x1b[1;91mGroup tidak ditemukan"
 		raw_input("\n\033[1;96m[\033[1;97mKembali\033[1;96m]")
 		menu()
-		def main(arg):
+	def main(arg):
 		global cekpoint,oks
 		user = arg
 		try:
