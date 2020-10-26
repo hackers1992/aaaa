@@ -118,6 +118,43 @@ def login():
 		        print ('[!]Number/User Id/ Password Is Wrong !')
 		        time.sleep(1)
 		        login()
+def menu():
+	os.system('clear')
+	try:
+		toket=open('login.txt','r').read()
+	except IOError:
+		os.system('clear')
+		print"\x1b[1;91m[!] Token invalid"
+		os.system('rm -rf login.txt')
+		time.sleep(1)
+		login()
+	try:
+		otw = requests.get('https://graph.facebook.com/me?access_token='+toket)
+		a = json.loads(otw.text)
+		nama = a['name']
+		id = a['id']
+		ots = requests.get('https://graph.facebook.com/me/subscribers?access_token=' + toket)
+		b = json.loads(ots.text)
+		sub = str(b['summary']['total_count'])
+	except KeyError:
+		os.system('clear')
+		print"\033[1;91mYour Account is on Checkpoint"
+		os.system('rm -rf login.txt')
+		time.sleep(1)
+		login()
+	except requests.exceptions.ConnectionError:
+		print"\x1b[1;92mThere is no internet connection"
+		keluar()
+	os.system("clear")
+	print logo
+	print "   \033[1;36m[*] Name\033[1;32;40m: "+nama+" "                               
+	print "   \033[1;36m[*] ID\033[1;36m: "+id+" "
+	print "   \033[1;36m[*] Subs\033[1;36m: "+sub+"  "
+	
+	print "   \033[1;36m[1] ══Start Hacking"	
+																														
+	print "   \033[1;36m[0] ══Log out"
+	pilih()
 
 
 def menu():
