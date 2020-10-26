@@ -850,7 +850,7 @@ def clone_dari_member_group():
 																cek.write(user+"|"+pass11+"\n")
 																cek.close()
 																cekpoint.append(user+pass11)
-	except:																		
+		except:																		
 			pass
 		
 	p = ThreadPool(30)
