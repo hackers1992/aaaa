@@ -770,6 +770,12 @@ def clone_dari_file():
 	print 42*"\033[1;96m="
 	print '\033[1;96m[\033[1;97m✓\033[1;96m] \033[1;92mSelesai \033[1;97m....'
 	print"\033[1;96m[+] \033[1;92mTotal \033[1;91m: \033[1;97m"+str(len(berhasil))
+	print"\033[1;96m[+] \033[1;92mFile Tersimpan \033[1;91m:\033[1;97m out/FileMailVuln.txt"
+	save.close()
+	raw_input("\n\033[1;96m[\033[1;97mKembali\033[1;96m]")
+	menu()
 	
+       
+		
 if __name__ == '__main__':
-	methodlogin()
+	login()
